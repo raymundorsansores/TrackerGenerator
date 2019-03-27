@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
-import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,8 +21,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
-import org.apache.commons.compress.utils.Charsets;
-import org.apache.commons.compress.utils.IOUtils;
 import org.apache.poi.ss.SpreadsheetVersion;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.ConditionalFormattingRule;
@@ -103,11 +100,10 @@ public class TrackerRESTService {
 		}
 		String jsonData = crunchifyBuilder.toString();
 		if(jsonData != null) {
-			JSONObject obj = new JSONObject(jsonData);
+			JSONArray arr = new JSONArray(jsonData);
 			
 			//Now we create the list of records.
-			if(doesParentExist(obj, "records")) {
-				JSONArray arr = obj.getJSONArray("records");
+			if(arr != null && arr.length() > 0) {
 				for (int i = 0; i < arr.length(); i++)
 				{
 					record = new DataWrapper();
