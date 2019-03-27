@@ -232,7 +232,7 @@ public class TrackerRESTService {
 		    
 		    
 		    for(File f : new File(path).listFiles()) {
-		    	System.out.println(f.getAbsolutePath() + f.getName());
+		    	System.out.println(f.getAbsolutePath() + f.getName() + "  ----- " + f.getPath());
 		    }
 			//MyTest.class.getResourceAsStream("/test.csv");
 			workbook = new XSSFWorkbook(is);
