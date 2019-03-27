@@ -53,7 +53,7 @@ public class TrackerRESTService {
 	@Produces("application/vnd.ms-excel.sheet.macroEnabled.12")
 	public Response generateTracker(InputStream incomingData) {
 		Response result = null;
-		String fileName = "HCSC_ACE_Stories status_v06.xlsm";
+		String fileName = "HCSC_ACE_Status.xlsm";
 		List<DataWrapper> data = convertJSONToWrapper(incomingData);		
 		try {
 			if(data.size() > 0) {
@@ -224,21 +224,7 @@ public class TrackerRESTService {
 		XSSFWorkbook workbook = null;
 		Integer size = data.size() - 1;
 		try {
-			//ClassLoader classloader = Thread.currentThread().getContextClassLoader();
 			InputStream is = TrackerRESTService.class.getResourceAsStream("../Template.xlsm");
-			System.out.println(is);
-			ClassLoader loader = Thread.currentThread().getContextClassLoader();
-		    URL url = loader.getResource("/");
-		    String path = url.getPath();
-		    
-		    
-		    for(File f : new File(path).listFiles()) {
-		    	System.out.println(f.getAbsolutePath() + f.getName() + "  ----- " + f.getPath());
-		    	for(File fa : new File(f.getParent()).listFiles()) {
-		    		System.out.println("======"+ fa.getAbsolutePath() + fa.getName() + "  ----- " + fa.getPath());
-		    	}
-		    }
-			//MyTest.class.getResourceAsStream("/test.csv");
 			workbook = new XSSFWorkbook(is);
 			//workbook = new XSSFWorkbook(OPCPackage.open("resources/Template.xlsm"));
 			XSSFSheet sheet = (XSSFSheet) workbook.getSheet("Status");
