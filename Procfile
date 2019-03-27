@@ -1,2 +1,2 @@
 web: java $JAVA_OPTS -jar target/dependency/webapp-runner.jar --port $PORT target/*.war
-web: java -agentlib:jdwp=transport=dt_socket,server=y,address=9090,suspend=n -jar target/TrackerService-0.0.1-SNAPSHOT.war
+web: java -agentlib:jdwp=transport=dt_socket,server=y,address=9090,suspend=n -war target/TrackerService-0.0.1-SNAPSHOT.war
