@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,6 +22,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
+import org.apache.commons.compress.utils.Charsets;
+import org.apache.commons.compress.utils.IOUtils;
 import org.apache.poi.ss.SpreadsheetVersion;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.ConditionalFormattingRule;
@@ -98,7 +101,6 @@ public class TrackerRESTService {
 		} catch (Exception e) {
 			System.out.println("Error Parsing: - ");
 		}
-		System.out.println("Data Received: " + crunchifyBuilder.toString());
 		String jsonData = crunchifyBuilder.toString();
 		if(jsonData != null) {
 			JSONObject obj = new JSONObject(jsonData);
@@ -224,7 +226,11 @@ public class TrackerRESTService {
 		try {
 			//ClassLoader classloader = Thread.currentThread().getContextClassLoader();
 			InputStream is = TrackerRESTService.class.getResourceAsStream("/Template.xlsm");
-			System.out.println(is);
+			ClassLoader loader = Thread.currentThread().getContextClassLoader();
+		    URL url = loader.getResource("/");
+		    String path = url.getPath();
+		    
+		    System.out.println(new File(path).listFiles());
 			//MyTest.class.getResourceAsStream("/test.csv");
 			workbook = new XSSFWorkbook(is);
 			//workbook = new XSSFWorkbook(OPCPackage.open("resources/Template.xlsm"));
