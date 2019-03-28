@@ -145,9 +145,7 @@ public class TrackerRESTService {
 						record.AG = getString(arr.getJSONObject(i).getJSONObject("Feature_FAT__r"), "Title_ACE__c");
 						record.AH = getString(arr.getJSONObject(i).getJSONObject("Feature_FAT__r"), "Name");
 					}
-					if(doesParentExist(arr.getJSONObject(i), "CurrentOwner_ACE__r")) {
-						record.AJ = getString(arr.getJSONObject(i).getJSONObject("CurrentOwner_ACE__r"), "Name");
-					}
+					record.AJ = getString(arr.getJSONObject(i), "Owner_ACE__c");
 					if(doesParentExist(arr.getJSONObject(i), "Sprint_FAT__r")) {
 						record.AL = getString(arr.getJSONObject(i).getJSONObject("Sprint_FAT__r"), "Name");
 					}
