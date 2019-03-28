@@ -51,20 +51,26 @@ public class TrackerRESTService {
 	public Response generateTracker(InputStream incomingData) {
 		Response result = null;
 		String fileName = "HCSC_ACE_Status.xlsm";
-		List<DataWrapper> data = convertJSONToWrapper(incomingData);		
+		System.out.println(incomingData);
+		List<DataWrapper> data = convertJSONToWrapper(incomingData);	
+		System.out.println(1);
 		try {
 			if(data.size() > 0) {
 				XSSFWorkbook workbook = generateTracker(data);
+				System.out.println(1);
 
 				FileOutputStream out = new FileOutputStream(new File(fileName));
 				workbook.write(out);
+				System.out.println(1);
 				out.close();
 				System.out.println("xlsm created successfully..");
 				File fileDownload = new File(fileName);
 		        ResponseBuilder response = Response.ok((Object) fileDownload);
 		        response.header("Content-Disposition", "attachment; filename=" + fileName);
 		        response.header("Content-Type", "application/vnd.ms-excel.sheet.macroEnabled.12");
+		        System.out.println(1);
 		        result = response.build();
+		        System.out.println(1);
 			}
 			
 
