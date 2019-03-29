@@ -230,7 +230,7 @@ public class TrackerRESTService {
 			/*InputStream is = TrackerRESTService.class.getResourceAsStream("../Template.xlsm");
 			workbook = new XSSFWorkbook(is);*/
 			//workbook = new XSSFWorkbook(OPCPackage.open("resources/Template.xlsm"));
-			File file = new File("../Template.xlsm");
+			File file = new File("/WebContent/Template.xlsm");
 			OPCPackage opcPackage = OPCPackage.open(file);
 			workbook = new XSSFWorkbook(opcPackage);
 			XSSFSheet sheet = (XSSFSheet) workbook.getSheet("Status");
