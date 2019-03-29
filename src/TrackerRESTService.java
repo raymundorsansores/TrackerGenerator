@@ -21,6 +21,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.ss.SpreadsheetVersion;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.ConditionalFormattingRule;
@@ -226,16 +228,19 @@ public class TrackerRESTService {
 		XSSFWorkbook workbook = null;
 		Integer size = data.size() - 1;
 		try {
-			InputStream is = TrackerRESTService.class.getResourceAsStream("../Template.xlsm");
-			workbook = new XSSFWorkbook(is);
+			/*InputStream is = TrackerRESTService.class.getResourceAsStream("../Template.xlsm");
+			workbook = new XSSFWorkbook(is);*/
 			//workbook = new XSSFWorkbook(OPCPackage.open("resources/Template.xlsm"));
+			File file = new File("../Template.xlsm");
+			OPCPackage opcPackage = OPCPackage.open(file);
+			workbook = new XSSFWorkbook(opcPackage);
 			XSSFSheet sheet = (XSSFSheet) workbook.getSheet("Status");
 			for (XSSFTable table : sheet.getTables()) {
 				for (int i = 0; i < size; i++) {
-					addRowToTable(workbook, table, size);			
+					addRowToTable(workbook, table);			
 					
 					// Now we copy all the formatting from the previous row.
-					//copyRow(workbook, sheet, 2 + i, 3 + i);
+					copyRow(workbook, sheet, 2 + i, 3 + i);
 				}				
 			}
 			
@@ -361,19 +366,22 @@ public class TrackerRESTService {
 			e.printStackTrace();
 		}catch (IOException e) {
 			e.printStackTrace();
+		} catch (InvalidFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return workbook;
 	}
 
-	private static void addRowToTable(XSSFWorkbook workbook, XSSFTable table, Integer size) {
+	private static void addRowToTable(XSSFWorkbook workbook, XSSFTable table) {
 
 		int lastTableRow = table.getEndCellReference().getRow();
 		int totalsRowCount = table.getTotalsRowCount();
 		int lastTableDataRow = lastTableRow - totalsRowCount;
 
 		// we will add one row in table data
-		lastTableRow = lastTableRow + size;
-		lastTableDataRow = lastTableDataRow + size;
+		lastTableRow++;
+		lastTableDataRow++;
 
 		// new table area plus one row
 		AreaReference newTableArea = new AreaReference(table.getStartCellReference(),
