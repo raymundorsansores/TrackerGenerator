@@ -365,9 +365,6 @@ public class TrackerRESTService {
 			e.printStackTrace();
 		}catch (IOException e) {
 			e.printStackTrace();
-		} catch (InvalidFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		return workbook;
 	}
