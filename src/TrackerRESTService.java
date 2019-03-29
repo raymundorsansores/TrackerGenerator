@@ -235,11 +235,11 @@ public class TrackerRESTService {
 			workbook = new XSSFWorkbook(opcPackage);*/
 			XSSFSheet sheet = (XSSFSheet) workbook.getSheet("Status");
 			for (XSSFTable table : sheet.getTables()) {
-				addRowToTable(workbook, table, size);
+				addRowToTable(workbook, table, size - 1);
 				for (int i = 0; i < size; i++) {
 					
 					// Now we copy all the formatting from the previous row.
-					//copyRow(workbook, sheet, 2 + i, 3 + i);
+					copyRow(workbook, sheet, 2 + i, 3 + i);
 				}				
 			}
 			
