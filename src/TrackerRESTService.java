@@ -232,10 +232,10 @@ public class TrackerRESTService {
 			XSSFSheet sheet = (XSSFSheet) workbook.getSheet("Status");
 			for (XSSFTable table : sheet.getTables()) {
 				for (int i = 0; i < size; i++) {
-					addRowToTable(workbook, table);			
+					addRowToTable(workbook, table, size);			
 					
 					// Now we copy all the formatting from the previous row.
-					copyRow(workbook, sheet, 2 + i, 3 + i);
+					//copyRow(workbook, sheet, 2 + i, 3 + i);
 				}				
 			}
 			
@@ -365,15 +365,15 @@ public class TrackerRESTService {
 		return workbook;
 	}
 
-	private static void addRowToTable(XSSFWorkbook workbook, XSSFTable table) {
+	private static void addRowToTable(XSSFWorkbook workbook, XSSFTable table, Integer size) {
 
 		int lastTableRow = table.getEndCellReference().getRow();
 		int totalsRowCount = table.getTotalsRowCount();
 		int lastTableDataRow = lastTableRow - totalsRowCount;
 
 		// we will add one row in table data
-		lastTableRow++;
-		lastTableDataRow++;
+		lastTableRow = lastTableRow + size;
+		lastTableDataRow = lastTableDataRow + size;
 
 		// new table area plus one row
 		AreaReference newTableArea = new AreaReference(table.getStartCellReference(),
