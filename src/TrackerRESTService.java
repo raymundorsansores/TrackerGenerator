@@ -108,7 +108,6 @@ public class TrackerRESTService {
 			System.out.println("Error Parsing: - ");
 		}
 		String jsonData = crunchifyBuilder.toString();
-		System.out.println(jsonData);
 		if(jsonData != null) {
 			JSONArray arr = new JSONArray(jsonData);
 			
