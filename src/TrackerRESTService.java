@@ -227,24 +227,24 @@ public class TrackerRESTService {
 		XSSFWorkbook workbook = null;
 		Integer size = data.size() - 1;
 		try {
-			/*InputStream is = TrackerRESTService.class.getResourceAsStream("../Template.xlsm");
-			workbook = new XSSFWorkbook(is);*/
+			InputStream is = TrackerRESTService.class.getResourceAsStream("../Template.xlsm");
+			workbook = new XSSFWorkbook(is);
 			//workbook = new XSSFWorkbook(OPCPackage.open("resources/Template.xlsm"));
-			File file = new File("/WEB-INF/Template.xlsm");
+			/*File file = new File("C:\\Users\\rayrodriguez7\\eclipse\\jee-2019-03\\eclipse\\apache\\apache-tomcat-9.0.17\\wtpwebapps\\TrackerService\\Template.xlsm");
 			OPCPackage opcPackage = OPCPackage.open(file);
-			workbook = new XSSFWorkbook(opcPackage);
+			workbook = new XSSFWorkbook(opcPackage);*/
 			XSSFSheet sheet = (XSSFSheet) workbook.getSheet("Status");
 			for (XSSFTable table : sheet.getTables()) {
+				addRowToTable(workbook, table, size);
 				for (int i = 0; i < size; i++) {
-					addRowToTable(workbook, table);			
 					
 					// Now we copy all the formatting from the previous row.
-					copyRow(workbook, sheet, 2 + i, 3 + i);
+					//copyRow(workbook, sheet, 2 + i, 3 + i);
 				}				
 			}
 			
 			// Now we extend the Conditional formatting.
-			Map<Integer, CellRangeAddress[]> formattingsRange = new HashMap<Integer, CellRangeAddress[]>();
+			/*Map<Integer, CellRangeAddress[]> formattingsRange = new HashMap<Integer, CellRangeAddress[]>();
 			Map<Integer, ConditionalFormattingRule> formattingsRule = new HashMap<Integer, ConditionalFormattingRule>();
 			SheetConditionalFormatting sheetFormatting = sheet.getSheetConditionalFormatting();
 			int numberOfConditions = sheetFormatting.getNumConditionalFormattings();
@@ -360,7 +360,7 @@ public class TrackerRESTService {
 						sheet.getRow(cr.getRow()).removeCell(cell);
 					}
 				}
-			}
+			}*/
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}catch (IOException e) {
@@ -372,15 +372,15 @@ public class TrackerRESTService {
 		return workbook;
 	}
 
-	private static void addRowToTable(XSSFWorkbook workbook, XSSFTable table) {
+	private static void addRowToTable(XSSFWorkbook workbook, XSSFTable table, Integer size) {
 
 		int lastTableRow = table.getEndCellReference().getRow();
 		int totalsRowCount = table.getTotalsRowCount();
 		int lastTableDataRow = lastTableRow - totalsRowCount;
 
 		// we will add one row in table data
-		lastTableRow++;
-		lastTableDataRow++;
+		lastTableRow = lastTableRow + size;
+		lastTableDataRow = lastTableDataRow + size;
 
 		// new table area plus one row
 		AreaReference newTableArea = new AreaReference(table.getStartCellReference(),
